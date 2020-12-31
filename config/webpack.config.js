@@ -1,17 +1,18 @@
 // 引入插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 // 可以判断当前环境-可以再.env里进行配置（cross-env）
-const isDev = process.env.NODE_ENV === 'development';
-const config = require('./public/config')[isDev ? 'dev' : 'build'];
+// const isDev = process.env.NODE_ENV === 'development';
 // 引入测量各个插件花费时间
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
+
+const BASE_PATH = "./"
 
 const webpackConfig = {
   //webpack的默认配置 入口
@@ -19,14 +20,13 @@ const webpackConfig = {
   // entry: './src/index.js',
   // 多页面入口
   entry: {
-    index: './src/index.js',
-    login: './src/login.js'
+    index: path.resolve(BASE_PATH, './src/index.tsx'),
   },
   output: {
-    path: path.resolve(__dirname, 'dist'), //必须是绝对路径
+    path: path.resolve(BASE_PATH, 'dist'), //必须是绝对路径
     filename: 'bundle.[hash:6].js',
     // 这里如果不设置，在单独打包的css中引入图片或者其他文件时，会找不到
-    publicPath: '/'
+    publicPath: BASE_PATH
   },
   // mode 配置项，告知 webpack 使用相应模式的内置优化。
   mode: "development",
@@ -37,10 +37,10 @@ const webpackConfig = {
   devtool: 'cheap-module-eval-source-map', //开发环境下使用
   resolve: {
     // import Dialog from 'dialog'，会去寻找 ./src/components/dialog，不再需要使用相对路径导入。如果在 ./src/components 下找不到的话，就会到 node_modules 下寻找。
-    modules: ['./src/components', 'node_modules'], //从左到右依次查找
+    modules: ['node_modules'], //从左到右依次查找
     // 这样配置，可以将一些长的依赖名缩短
     alias: {
-      'react-native': '@my/react-native-web' //这个包名是我随便写的哈
+      '@': path.resolve(BASE_PATH, './src')
     }
   },
   module: {
@@ -50,7 +50,7 @@ const webpackConfig = {
     */
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(tsx?|js)$/,
         /* 
         use 字段有几种写法可以是一个字符串，例如上面的 use: 'babel-loader'
         use 字段可以是一个数组，例如处理CSS文件是，use: ['style-loader', 'css-loader']
@@ -87,23 +87,6 @@ const webpackConfig = {
         postcss-loader 和 autoprefixer，自动生成浏览器兼容性前缀
         less-loader 负责处理编译 .less 文件,将其转为 css
         */
-        //  如果要單獨将css文件进行打包,使用MiniCssExtractPlugin.loader替换之前的 style-loader
-        // 这是将css打包进js中
-        // use: ['style-loader', 'css-loader', {
-        //   loader: 'postcss-loader',
-        //   options: {
-        //     plugins: function () {
-        //       return [
-        //         require('autoprefixer')({
-        //           "overrideBrowserslist": [
-        //             ">0.25%",
-        //             "not dead"
-        //           ]
-        //         })
-        //       ]
-        //     }
-        //   }
-        // }, 'less-loader'],
         // 通过配置MiniCssExtractPlugin，将css单独打包
         use: [MiniCssExtractPlugin.loader,
           'css-loader', {
@@ -151,15 +134,11 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       React: 'react',
       Component: ['react', 'Component'],
-      Vue: ['vue/dist/vue.esm.js', 'default'],
-      $: 'jquery',
-      _map: ['lodash', 'map']
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: path.resolve(BASE_PATH, './public/index.html'),
       //打包后的文件名
       filename: 'index.html',
-      config: config.template,
       // 接受一个数组，配置此参数仅会将数组中指定的js引入到html文件中，此外，如果你需要引入多个JS文件，仅有少数不想引入，还可以指定 excludeChunks 参数，它接受一个数组
       chunks: ['index'],
       minify: {
@@ -170,32 +149,19 @@ const webpackConfig = {
       }
       // hash: true //是否加上hash，默认是 false
     }),
-    // 多页面应用打包
-    new HtmlWebpackPlugin({
-      template: './public/login.html',
-      //打包后的文件名
-      filename: 'login.html',
-      // 接受一个数组，配置此参数仅会将数组中指定的js引入到html文件中，此外，如果你需要引入多个JS文件，仅有少数不想引入，还可以指定 excludeChunks 参数，它接受一个数组
-      chunks: ['login']
-    }),
     // 每次打包刪除上一次的dist包
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] //不删除dll目录下的文件
     }),
     // 這個插件可以拷貝資源
-    new CopyWebpackPlugin([
-      {
-        from: 'public/js/*.js',
-        to: path.resolve(__dirname, 'dist', 'js'),
-        // 设置为 true，那么它只会拷贝文件，而不会把文件夹路径都拷贝上
-        flatten: true,
-      }],
-      {
-        // 忽略部分文件
-        ignore: ['other.js']
-      }
-      //还可以继续配置其它要拷贝的文件
-    ),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: 'public/*.js',
+    //     to: path.resolve(BASE_PATH, './dist'),
+    //     // 设置为 true，那么它只会拷贝文件，而不会把文件夹路径都拷贝上
+    //     flatten: true,
+    //   }]
+    // ),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
       //个人习惯将css文件放在单独目录下
