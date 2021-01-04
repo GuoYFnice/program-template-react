@@ -12,7 +12,9 @@ const path = require('path');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
 
-const BASE_PATH = "./"
+
+const BASE_PATH = path.resolve(__dirname, '../');
+// const BASE_PATH = "./"
 
 const webpackConfig = {
   //webpack的默认配置 入口
@@ -26,7 +28,7 @@ const webpackConfig = {
     path: path.resolve(BASE_PATH, 'dist'), //必须是绝对路径
     filename: 'bundle.[hash:6].js',
     // 这里如果不设置，在单独打包的css中引入图片或者其他文件时，会找不到
-    publicPath: BASE_PATH
+    publicPath: '/'
   },
   // mode 配置项，告知 webpack 使用相应模式的内置优化。
   mode: "development",
@@ -37,7 +39,8 @@ const webpackConfig = {
   devtool: 'cheap-module-eval-source-map', //开发环境下使用
   resolve: {
     // import Dialog from 'dialog'，会去寻找 ./src/components/dialog，不再需要使用相对路径导入。如果在 ./src/components 下找不到的话，就会到 node_modules 下寻找。
-    modules: ['node_modules'], //从左到右依次查找
+    // modules: ['node_modules'], //从左到右依次查找
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     // 这样配置，可以将一些长的依赖名缩短
     alias: {
       '@': path.resolve(BASE_PATH, './src')
@@ -58,17 +61,18 @@ const webpackConfig = {
         */
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ["@babel/preset-env"],
-            plugins: [
-              [
-                "@babel/plugin-transform-runtime",
-                {
-                  "corejs": 3
-                }
-              ]
-            ]
-          }
+          options: { cacheDirectory: true },
+          // options: {
+          //   presets: ["@babel/preset-env"],
+          //   plugins: [
+          //     [
+          //       "@babel/plugin-transform-runtime",
+          //       {
+          //         "corejs": 3
+          //       }
+          //     ]
+          //   ]
+          // }
         },
         //排除 node_modules 目录
         exclude: /node_modules/
@@ -80,12 +84,12 @@ const webpackConfig = {
         考虑到兼容性问题，还需要 postcss-loader，
         如果是 less 或者是 sass 的话，还需要 less-loader 和 sass-loader，这里配置一下 less 和 css 文件(sass 的话，使用 sass-loader即可):
         */
-        test: /\.(le|c)ss$/,
+        test: /\.(sc|c)ss$/,
         /* 
         style-loader 动态创建 style 标签，将 css 插入到 head 中.
         css-loader 负责处理 @import 等语句。
         postcss-loader 和 autoprefixer，自动生成浏览器兼容性前缀
-        less-loader 负责处理编译 .less 文件,将其转为 css
+        sass-loader 负责处理编译 .sass 文件,将其转为 css
         */
         // 通过配置MiniCssExtractPlugin，将css单独打包
         use: [MiniCssExtractPlugin.loader,
@@ -103,7 +107,7 @@ const webpackConfig = {
               ]
             }
           }
-        }, 'less-loader'],
+        },'sass-loader'],
         exclude: /node_modules/
       },
       {
@@ -174,6 +178,7 @@ const webpackConfig = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
+    publicPath: BASE_PATH,
     //默认是8080
     port: '3000',
     /* 

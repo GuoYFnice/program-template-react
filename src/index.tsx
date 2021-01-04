@@ -9,5 +9,5 @@ if (module && module.hot) {
   module.hot.accept();
 }
 
-
-ReactDOM.render(<Home />, document.getElementById('root'));
+// querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。
+ReactDOM.render(<Home />, document.querySelector('#root'));
