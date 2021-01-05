@@ -9,7 +9,8 @@ const path = require('path');
 // 可以判断当前环境-可以再.env里进行配置（cross-env）
 // const isDev = process.env.NODE_ENV === 'development';
 // 引入测量各个插件花费时间
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+
 const smp = new SpeedMeasurePlugin();
 
 
@@ -17,26 +18,26 @@ const BASE_PATH = path.resolve(__dirname, '../');
 // const BASE_PATH = "./"
 
 const webpackConfig = {
-  //webpack的默认配置 入口
+  // webpack的默认配置 入口
   // 单页面入口
   // entry: './src/index.js',
   // 多页面入口
   entry: {
-    index: path.resolve(BASE_PATH, './src/index.tsx'),
+    index: path.resolve(BASE_PATH, './src/index.tsx')
   },
   output: {
-    path: path.resolve(BASE_PATH, 'dist'), //必须是绝对路径
-    filename: 'bundle.[hash:6].js',
+    path: path.resolve(BASE_PATH, './dist'), // 必须是绝对路径
+    filename: 'js/[name].[hash:8].js',
     // 这里如果不设置，在单独打包的css中引入图片或者其他文件时，会找不到
     publicPath: '/'
   },
   // mode 配置项，告知 webpack 使用相应模式的内置优化。
-  mode: "development",
+  mode: 'development',
   /* 
   devtool 中的一些设置，可以帮助我们将编译后的代码映射回原始源代码。不同的值会明显影响到构建和重新构建的速度。
   生产环境可以使用 none 或者是 source-map，使用 source-map 最终会单独打包出一个 .map 文件，我们可以根据报错信息和此 map 文件，进行错误解析，定位到源代码。
   */
-  devtool: 'cheap-module-eval-source-map', //开发环境下使用
+  devtool: 'cheap-module-eval-source-map', // 开发环境下使用
   resolve: {
     // import Dialog from 'dialog'，会去寻找 ./src/components/dialog，不再需要使用相对路径导入。如果在 ./src/components 下找不到的话，就会到 node_modules 下寻找。
     // modules: ['node_modules'], //从左到右依次查找
@@ -61,7 +62,7 @@ const webpackConfig = {
         */
         use: {
           loader: 'babel-loader',
-          options: { cacheDirectory: true },
+          options: { cacheDirectory: true }
           // options: {
           //   presets: ["@babel/preset-env"],
           //   plugins: [
@@ -74,7 +75,7 @@ const webpackConfig = {
           //   ]
           // }
         },
-        //排除 node_modules 目录
+        // 排除 node_modules 目录
         exclude: /node_modules/
       },
       {
@@ -96,15 +97,15 @@ const webpackConfig = {
           'css-loader', {
           loader: 'postcss-loader',
           options: {
-            plugins: function () {
+            plugins () {
               return [
                 require('autoprefixer')({
-                  "overrideBrowserslist": [
-                    ">0.25%",
-                    "not dead"
+                  'overrideBrowserslist': [
+                    '>0.25%',
+                    'not dead'
                   ]
                 })
-              ]
+              ];
             }
           }
         },'sass-loader'],
@@ -117,7 +118,7 @@ const webpackConfig = {
             loader: 'url-loader',
             options: {
               // 资源大小小于 10K 时，将资源转换为 base64，超过 10K，将图片拷贝到 dist 目录。
-              limit: 10240, //10K
+              limit: 10240, // 10K
               // esModule 设置为 false，否则，<img src={require('XXX.jpg')} /> 会出现 <img src=[Module Object] />
               esModule: false,
               // 默认情况下，生成的文件的文件名就是文件内容的 MD5 哈希值并会保留所引用资源的原始扩展名（這裡進行了名字的定義）
@@ -131,31 +132,42 @@ const webpackConfig = {
       }
     ]
   },
-  //数组 放着所有的webpack插件
+  // 数组 放着所有的webpack插件
   plugins: [
     // 默认寻找路径是当前文件夹 ./** 和 node_modules，当然啦，你可以指定全路径
     // 这样配置之后，你就可以在项目中随心所欲的使用 $、_map了，并且写 React 组件时，也不需要 import React 和 Component 了
     new webpack.ProvidePlugin({
       React: 'react',
-      Component: ['react', 'Component'],
+      Component: ['react', 'Component']
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(BASE_PATH, './public/index.html'),
-      //打包后的文件名
+      // 打包后的文件名
       filename: 'index.html',
+      cache: false,
       // 接受一个数组，配置此参数仅会将数组中指定的js引入到html文件中，此外，如果你需要引入多个JS文件，仅有少数不想引入，还可以指定 excludeChunks 参数，它接受一个数组
-      chunks: ['index'],
+      // chunks: ['index'],
       minify: {
-        //是否删除属性的双引号
+        // 是否删除属性的双引号
         removeAttributeQuotes: false,
-        //是否折叠空白
+        // 是否折叠空白
         collapseWhitespace: false,
+        removeComments: true,
+        collapseBooleanAttributes: true,
+        collapseInlineTagWhitespace: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        useShortDoctype: true
       }
       // hash: true //是否加上hash，默认是 false
     }),
     // 每次打包刪除上一次的dist包
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] //不删除dll目录下的文件
+      cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] // 不删除dll目录下的文件
     }),
     // 這個插件可以拷貝資源
     // new CopyWebpackPlugin([
@@ -167,38 +179,38 @@ const webpackConfig = {
     //   }]
     // ),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-      //个人习惯将css文件放在单独目录下
+      filename: 'css/[name].css'
+      // 个人习惯将css文件放在单独目录下
       // publicPath: '../'   
-      //如果你的output的publicPath配置的是 './' 这种相对路径，那么如果将css文件放在单独目录下，记得在这里指定一下publicPath 
+      // 如果你的output的publicPath配置的是 './' 这种相对路径，那么如果将css文件放在单独目录下，记得在这里指定一下publicPath 
     }),
     // 进行css代码压缩
     new OptimizeCssPlugin(),
-    //热更新插件
+    // 热更新插件
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    publicPath: BASE_PATH,
-    //默认是8080
+    // 默认是8080
     port: '3000',
     /* 
      启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见  (默认不启用)
      */
     quiet: false,
-    //默认开启 inline 模式，如果设置为false,开启 iframe 模式
+    // 默认开启 inline 模式，如果设置为false,开启 iframe 模式
     inline: true,
-    //终端仅打印 error
-    stats: "errors-only",
-    //默认不启用 -当编译出错时，会在浏览器窗口全屏输出错误
+    // 终端仅打印 error
+    stats: 'errors-only',
+    // 默认不启用 -当编译出错时，会在浏览器窗口全屏输出错误
     overlay: false,
-    //日志等级
-    clientLogLevel: "silent",
-    //是否启用 gzip 压缩
+    // 日志等级
+    clientLogLevel: 'silent',
+    // 是否启用 gzip 压缩
     compress: true,
+    open: true,
     // 热更新
     hot: true
   }
-}
+};
 
 // 量各个插件和loader所花费的时间
 module.exports = smp.wrap(webpackConfig);
