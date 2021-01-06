@@ -94,10 +94,35 @@ const webpackConfig = {
         */
         // 通过配置MiniCssExtractPlugin，将css单独打包
         use: [MiniCssExtractPlugin.loader,
-          'css-loader', {
+        // {
+        //   // 将css-loader上包一层，他的选项完全兼容css-loader
+        //   // 他会为sass文件生成对应的sass.d.ts（为了ts正常解析）
+        //   loader: 'css-modules-typescript-loader',
+        //   options: {
+        //     // 使用css modules
+        //     modules: true,
+        //     // 类名导出
+        //     namedExport: true,
+        //     // 支持驼峰
+        //     camelCase: true,
+        //     // 是否使用sass
+        //     sass: true,
+        //     // 定义类名
+        //     localIdentName: '[name]_[local]_[hash:base63:5]'
+        //   }
+        // },
+        {
+          loader: 'css-loader',
+          options: {
+            // 使用css modules
+            modules: true
+          }
+        },
+        // 'css-loader',
+        {
           loader: 'postcss-loader',
           options: {
-            plugins () {
+            plugins() {
               return [
                 require('autoprefixer')({
                   'overrideBrowserslist': [
@@ -108,7 +133,7 @@ const webpackConfig = {
               ];
             }
           }
-        },'sass-loader'],
+        }, 'sass-loader'],
         exclude: /node_modules/
       },
       {

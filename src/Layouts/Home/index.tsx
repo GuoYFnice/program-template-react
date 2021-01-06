@@ -2,16 +2,16 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { routes } from '../../routes';
 import LeftSidebar from '../LeftSidebar';
-// import styles from './index.module.scss';
+import styles from './index.module.scss';
 
 const ComponentsDisplay = () => {
   return (
-    // <div className={styles.App}>
-    <div>
+    <div className={styles.App}>
+      {/* <div> */}
       <Router>
         <LeftSidebar />
-        {/* <main className={styles.mainContentRight}> */}
-        <main>
+        <main className={styles.mainContentRight}>
+          {/* <main> */}
           <Suspense fallback={<div>loading...</div>}>
             <Switch>
               {routes.map((route, index) => (
