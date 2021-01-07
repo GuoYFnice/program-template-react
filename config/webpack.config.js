@@ -62,7 +62,10 @@ const webpackConfig = {
         */
         use: {
           loader: 'babel-loader',
-          options: { cacheDirectory: true }
+          options: {
+            // 开启缓存，避免运行期间重复的公共文件，造成代码体积大冗余，同时也会减慢编译效率
+            cacheDirectory: true
+          }
           // options: {
           //   presets: ["@babel/preset-env"],
           //   plugins: [
@@ -161,10 +164,10 @@ const webpackConfig = {
   plugins: [
     // 默认寻找路径是当前文件夹 ./** 和 node_modules，当然啦，你可以指定全路径
     // 这样配置之后，你就可以在项目中随心所欲的使用 $、_map了，并且写 React 组件时，也不需要 import React 和 Component 了
-    new webpack.ProvidePlugin({
-      React: 'react',
-      Component: ['react', 'Component']
-    }),
+    // new webpack.ProvidePlugin({
+    //   React: 'react',
+    //   Component: ['react', 'Component']
+    // }),
     new HtmlWebpackPlugin({
       template: path.resolve(BASE_PATH, './public/index.html'),
       // 打包后的文件名
@@ -191,9 +194,10 @@ const webpackConfig = {
       // hash: true //是否加上hash，默认是 false
     }),
     // 每次打包刪除上一次的dist包
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] // 不删除dll目录下的文件
-    }),
+    // TODO: 需要分开生产环境和开发环境---只在打包时执行
+    // new CleanWebpackPlugin({
+    //   cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] // 不删除dll目录下的文件
+    // }),
     // 這個插件可以拷貝資源
     // new CopyWebpackPlugin([
     //   {
@@ -214,8 +218,12 @@ const webpackConfig = {
     // 热更新插件
     new webpack.HotModuleReplacementPlugin()
   ],
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM'
+  // },
   devServer: {
-    // 默认是8080
+    host: 'localhost',
     port: '3000',
     /* 
      启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见  (默认不启用)
@@ -233,7 +241,8 @@ const webpackConfig = {
     compress: true,
     open: true,
     // 热更新
-    hot: true
+    hot: true,
+    historyApiFallback: true
   }
 };
 

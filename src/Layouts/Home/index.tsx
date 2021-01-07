@@ -7,15 +7,13 @@ import styles from './index.module.scss';
 const ComponentsDisplay = () => {
   return (
     <div className={styles.App}>
-      {/* <div> */}
       <Router>
         <LeftSidebar />
         <main className={styles.mainContentRight}>
-          {/* <main> */}
           <Suspense fallback={<div>loading...</div>}>
             <Switch>
-              {routes.map((route, index) => (
-                <Route key={index} path={route.path}  component={route.component} />
+              {routes.map((route) => (
+                <Route key={route.path} path={route.path}  component={route.component} />
               ))}
               {/* 重定向路由。 */}
               <Redirect exact to='/PageOne' from='/' />
