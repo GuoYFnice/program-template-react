@@ -1,10 +1,10 @@
 // 引入插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const path = require('path');
 // 可以判断当前环境-可以再.env里进行配置（cross-env）
 // const isDev = process.env.NODE_ENV === 'development';
@@ -31,8 +31,8 @@ const webpackConfig = {
     // 这里如果不设置，在单独打包的css中引入图片或者其他文件时，会找不到
     publicPath: '/'
   },
-  // mode 配置项，告知 webpack 使用相应模式的内置优化。
-  mode: 'development',
+  // mode 配置项，告知 webpack 使用相应模式的内置优化。(已經分開配置)
+  // mode: 'development',
   /* 
   devtool 中的一些设置，可以帮助我们将编译后的代码映射回原始源代码。不同的值会明显影响到构建和重新构建的速度。
   生产环境可以使用 none 或者是 source-map，使用 source-map 最终会单独打包出一个 .map 文件，我们可以根据报错信息和此 map 文件，进行错误解析，定位到源代码。
@@ -207,6 +207,17 @@ const webpackConfig = {
     //     flatten: true,
     //   }]
     // ),
+    // * 打包后将 public 文件夹下的静态资源拷贝到 dist 目录下。
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          context: path.resolve(BASE_PATH, './public'),
+          from: '*',
+          to: path.resolve(BASE_PATH, './dist'),
+          toType: 'dir'
+        }
+      ]
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
       // 个人习惯将css文件放在单独目录下
@@ -214,36 +225,36 @@ const webpackConfig = {
       // 如果你的output的publicPath配置的是 './' 这种相对路径，那么如果将css文件放在单独目录下，记得在这里指定一下publicPath 
     }),
     // 进行css代码压缩
-    new OptimizeCssPlugin(),
+    new OptimizeCssPlugin()
     // 热更新插件
-    new webpack.HotModuleReplacementPlugin()
-  ],
+    // new webpack.HotModuleReplacementPlugin()
+  ]
   // externals: {
   //   react: 'React',
   //   'react-dom': 'ReactDOM'
   // },
-  devServer: {
-    host: 'localhost',
-    port: '3000',
-    /* 
-     启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见  (默认不启用)
-     */
-    quiet: false,
-    // 默认开启 inline 模式，如果设置为false,开启 iframe 模式
-    inline: true,
-    // 终端仅打印 error
-    stats: 'errors-only',
-    // 默认不启用 -当编译出错时，会在浏览器窗口全屏输出错误
-    overlay: false,
-    // 日志等级
-    clientLogLevel: 'silent',
-    // 是否启用 gzip 压缩
-    compress: true,
-    open: true,
-    // 热更新
-    hot: true,
-    historyApiFallback: true
-  }
+  // devServer: {
+  //   host: 'localhost',
+  //   port: '3000',
+  //   /* 
+  //    启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见  (默认不启用)
+  //    */
+  //   quiet: false,
+  //   // 默认开启 inline 模式，如果设置为false,开启 iframe 模式
+  //   inline: true,
+  //   // 终端仅打印 error
+  //   stats: 'errors-only',
+  //   // 默认不启用 -当编译出错时，会在浏览器窗口全屏输出错误
+  //   overlay: false,
+  //   // 日志等级
+  //   clientLogLevel: 'silent',
+  //   // 是否启用 gzip 压缩
+  //   compress: true,
+  //   open: true,
+  //   // 热更新
+  //   hot: true,
+  //   historyApiFallback: true
+  // }
 };
 
 // 量各个插件和loader所花费的时间

@@ -4,7 +4,6 @@ import './index.scss';
 import Home from './Layouts/Home';
 
 
-
 // if (module && module.hot) {
 //   module.hot.accept();
 // }
