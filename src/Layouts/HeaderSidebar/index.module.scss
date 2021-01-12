@@ -1,0 +1,14 @@
+.HeaderSidebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 55px;
+  color: #222831;
+  line-height: 55px;
+  background-color: #ffd369;
+  .HeaderSidebarTitle{
+    padding-left: 20px;
+    font-size: 24px;
+  }
+}

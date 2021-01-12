@@ -7,7 +7,7 @@ const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 // const webpack = require('webpack');
 const path = require('path');
 // 可以判断当前环境-可以再.env里进行配置（cross-env）
-// const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 // 引入测量各个插件花费时间
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
@@ -96,7 +96,7 @@ const webpackConfig = {
         sass-loader 负责处理编译 .sass 文件,将其转为 css
         */
         // 通过配置MiniCssExtractPlugin，将css单独打包
-        use: [MiniCssExtractPlugin.loader,
+        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
         // {
         //   // 将css-loader上包一层，他的选项完全兼容css-loader
         //   // 他会为sass文件生成对应的sass.d.ts（为了ts正常解析）
@@ -138,6 +138,20 @@ const webpackConfig = {
           }
         }, 'sass-loader'],
         exclude: /node_modules/
+      },
+      // * 单独处理 antd 样式，避免模块化 css 文件影响。
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev
+            }
+          }
+        ],
+        exclude: /src/
       },
       {
         test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
