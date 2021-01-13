@@ -2,18 +2,18 @@ import React, { useReducer } from 'react';
 import {IAPPState,ActionType,IAction} from '@/types/TodoDemo';
 
 const initialState: IAPPState = {
-  todos: [1,2,3],
+  todos: [],
   newTodo: '',
-  editTodo: ''
+  editTodo: '',
+  finish: []
 };
 
 const methods = {
   // [ActionType.CREATE] : (state: IAPPState ,data :ITodo):IAPPState => {
     [ActionType.CREATE] : (state: IAPPState ,data :any):IAPPState => {
-    console.log(123123);
+    state.todos.push(data.newTodo);
     return {
-      ...state,
-      todos:[...data]
+      ...state
     };
   },
   [ActionType.UPDATE] : (state: IAPPState ,data :any):IAPPState => {
@@ -27,11 +27,16 @@ const methods = {
       ...state,
       todos:data.newTodo
     };
+  },
+  [ActionType.FINISH] : (state: IAPPState ,data :any):IAPPState => {
+    return {
+      ...state,
+      finish:data.finish
+    };
   }
 };
 
 const reducer = (state: IAPPState, action: IAction): IAPPState => {
-  console.log(666);
   const { type, payload } = action;
   return methods[type] ? methods[type](state, payload) : state;
 };

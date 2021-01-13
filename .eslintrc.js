@@ -50,7 +50,6 @@ module.exports = {
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }],
     'import/prefer-default-export': OFF,
     'import/no-unresolved': ERROR,
-
     'unicorn/better-regex': ERROR,
     'unicorn/prevent-abbreviations': OFF,
     'unicorn/filename-case': [
