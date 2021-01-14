@@ -10,7 +10,7 @@ export enum ActionType {
 }
 export interface IAPPState {
   todos: Array<any>,
-  newTodo?: string,
+  newTodo?: string | number,
   editTodo?: string,
   finish?: Array<any>
 }
