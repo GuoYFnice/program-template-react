@@ -5,6 +5,7 @@ export enum ActionType {
   UPDATE = 'update',
   // 删除Todo
   DELETE = 'delete',
+  // 完成的Todo
   FINISH = 'finish'
 }
 export interface IAPPState {

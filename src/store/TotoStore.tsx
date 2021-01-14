@@ -10,13 +10,16 @@ const initialState: IAPPState = {
 
 const methods = {
   // [ActionType.CREATE] : (state: IAPPState ,data :ITodo):IAPPState => {
+    // TODO 對data 的類型單獨配置不能直接使用any
     [ActionType.CREATE] : (state: IAPPState ,data :any):IAPPState => {
-    state.todos.push(data.newTodo);
+    const todos:Array<any> = [...new Set([...state.todos,data.newTodo])];
     return {
-      ...state
+      ...state,
+      todos
     };
   },
   [ActionType.UPDATE] : (state: IAPPState ,data :any):IAPPState => {
+    
     return {
       ...state,
       todos:data
