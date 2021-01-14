@@ -1,0 +1,21 @@
+$activeColor: #ffd369;
+$defaultColor: #222831;
+$backgroundColor: #3f3f3f;
+
+/* flex布局 */
+@mixin flex($justify:space-between, $align: center, $wrap: nowrap) {
+  display: flex;
+  flex-wrap: $wrap;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+// 通用 border
+@mixin border($color) {
+  border: 1px solid $color;
+}
+
+// 手型
+@mixin cursor($pointer: pointer) {
+  cursor: $pointer;
+}

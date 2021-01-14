@@ -1,18 +1,17 @@
+@import '../../variables.scss';
 .HeaderSidebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex(space-between);
   width: 100vw;
   height: 55px;
-  color: #222831;
+  color: $defaultColor;
   line-height: 55px;
-  background-color: #ffd369;
+  background-color: $activeColor;
   .HeaderSidebarTitle{
     padding-left: 20px;
     font-size: 24px;
   }
   .HeaderSidebarIcon {
     margin-right: 20px;
-    background-color: #001529;
+    background-color: $defaultColor;
   }
 }

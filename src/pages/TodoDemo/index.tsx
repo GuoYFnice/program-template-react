@@ -8,6 +8,7 @@ const TodoDemo: React.FC = (): JSX.Element => {
 
   return (
     <Provider>
+      <h1 className={styles.TodoTitle}>todos</h1>
       <section className={styles.TodoDemo}>
         <TodoInput />
         <TodoItem />
