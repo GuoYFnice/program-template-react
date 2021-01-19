@@ -136,7 +136,15 @@ const webpackConfig = {
               ];
             }
           }
-        }, 'sass-loader'],
+        }, 'sass-loader',
+        // 全局引用scss文件
+        {
+            loader: 'sass-resources-loader',
+            options: {
+                resources: [path.resolve(BASE_PATH, './src/variables.scss')]
+            }
+        }
+      ],
         exclude: /node_modules/
       },
       // * 单独处理 antd 样式，避免模块化 css 文件影响。

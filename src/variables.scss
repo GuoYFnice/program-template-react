@@ -1,10 +1,16 @@
 $activeColor: #ffd369;
 $defaultColor: #222831;
-$backgroundColor: #3f3f3f;
+$backgroundColor: #393e46;
+$fontColor: #eee;
+$otherFontColor: #4d4d4d;
+$white: #fff;
+$black: #000;
+
 
 /* flex布局 */
-@mixin flex($justify:space-between, $align: center, $wrap: nowrap) {
+@mixin flex($justify: space-between, $align: center, $wrap: nowrap , $direction: row) {
   display: flex;
+  flex-direction: $direction;
   flex-wrap: $wrap;
   align-items: $align;
   justify-content: $justify;

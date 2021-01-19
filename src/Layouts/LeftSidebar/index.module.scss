@@ -1,24 +1,24 @@
 .leftSidebar {
   width: 250px;
-  background-color: #393e46 !important;
+  background-color: $backgroundColor !important;
   :global {
     .ant-menu-inline {
-      background-color: #282c34 !important;
+      background-color: $defaultColor !important;
     }
     .ant-menu-item-only-child {
       margin: 0;
     }
     .ant-menu-item-selected {
-      background-color: #ffd369 !important;
+      background-color: $activeColor !important;
       a {
-        color: #222831 !important;
+        color: $defaultColor !important;
       }
     }
     .ant-menu-item-active:not(.ant-menu-item-selected) {
       margin-left: 10px;
       transform: scale(1.1);
       a {
-        color: #ffd369 !important;
+        color: $activeColor !important;
       }
     }
   }
