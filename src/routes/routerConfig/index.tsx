@@ -20,6 +20,10 @@ export const menusList = [
       {
         name: 'TodoDemo',
         path: '/TodoDemo'
+      },
+      {
+        name: 'InfiniteRolling',
+        path: '/InfiniteRolling'
       }
     ]
   }

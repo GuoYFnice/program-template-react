@@ -160,3 +160,16 @@ a:hover,
 a:active {
 	text-decoration: none;
 }
+// * 重置滚动条样式。
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: $backgroundColor;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $activeColor;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  width: 8px;
+}

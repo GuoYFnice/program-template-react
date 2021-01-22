@@ -58,7 +58,7 @@ service.interceptors.request.use(
     const token = localStorage.getItem('token') || 'default';
     // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = token ? null : token;
-    removePending(config);
+    removePending(config as AxiosRequestConfig);
     // eslint-disable-next-line no-param-reassign
     config.cancelToken = new CancelToken((c) => {
       pending.push({ url: config.url, method: config.method, params: config.params, data: config.data, cancel: c });
