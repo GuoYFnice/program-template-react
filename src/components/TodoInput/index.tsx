@@ -29,7 +29,7 @@ const TodoInput: React.FC = (): JSX.Element => {
     <Input
       size='large'
       autoComplete='off'
-      placeholder='What needs to be done?'
+      placeholder='What needs to do?'
       {...inputProps}
       onKeyDown={onKeyDown}
     />
