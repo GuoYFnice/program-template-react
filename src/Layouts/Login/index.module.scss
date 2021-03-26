@@ -1,0 +1,24 @@
+.App {
+  width: 100vw;
+  min-height: 100vh;
+  color: $fontColor;
+  font-size: calc(10px + 2vmin);
+  background-color: $defaultColor;
+  @include flex(center,center,nowrap,column);
+  .main {
+    color: $fontColor;
+    background-color: $backgroundColor;
+    padding: 30px 50px;
+    width: 30vw;
+    height: 30vh;
+    @include flex(space-between,center,nowrap,column);
+    .mainTitle {
+      color: $activeColor;
+    }
+    .mainButton {
+      color: $activeColor;
+      background-color: $defaultColor;
+      border: 1px solid $activeColor;
+    }
+  }
+}

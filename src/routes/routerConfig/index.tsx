@@ -10,7 +10,11 @@ export const menusList = [
     children: [
       {
         name: 'PageOne',
-        path: '/PageOne'
+        path: '/Home/PageOne'
+      },
+      {
+        name: 'GameList',
+        path: '/Home/GameList'
       }
     ]
   },
@@ -19,11 +23,11 @@ export const menusList = [
     children: [
       {
         name: 'TodoDemo',
-        path: '/TodoDemo'
+        path: '/Home/TodoDemo'
       },
       {
         name: 'InfiniteRolling',
-        path: '/InfiniteRolling'
+        path: '/Home/InfiniteRolling'
       }
     ]
   }

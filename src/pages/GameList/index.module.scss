@@ -1,0 +1,13 @@
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    .box {
+      border: 1px solid #fff;
+      width: 30%;
+      height: 100px;
+      display: flex;
+      .no {
+        color: red;
+      }
+    }
+  }
