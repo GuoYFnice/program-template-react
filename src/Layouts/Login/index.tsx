@@ -30,7 +30,7 @@ const Login = () => {
           {...userName}
           placeholder='userName'
         />
-        <Input
+        <Input.Password
           size='large'
           autoComplete='off'
           {...passWord}
