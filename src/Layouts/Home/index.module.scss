@@ -10,7 +10,6 @@
     height: calc(100vh - 70px);
     overflow: auto;
     .mainContent {
-      @include flex(center,center,nowrap,column);
       width: calc(100vw - 250px);
       overflow: auto;
     }

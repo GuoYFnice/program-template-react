@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-import { menusList } from '@/routes/RouterConfig';
+import {menusList} from '@/routes/routerConfig/index'
 import styles from './index.module.scss';
 
 const { SubMenu } = Menu;

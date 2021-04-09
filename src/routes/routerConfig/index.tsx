@@ -7,6 +7,7 @@ export const menus = [
 export const menusList = [
   {
     name: 'PageOne',
+    path: '/Home',
     children: [
       {
         name: 'PageOne',
@@ -20,6 +21,7 @@ export const menusList = [
   },
   {
     name: 'Demo',
+    path: '/Home',
     children: [
       {
         name: 'TodoDemo',

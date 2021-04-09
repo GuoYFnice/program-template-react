@@ -7,6 +7,7 @@ import styles from './index.module.scss';
 const TodoDemo: React.FC = (): JSX.Element => {
 
   return (
+    <main className={styles.main}>
     <Provider>
       <h1 className={styles.TodoTitle}>todos</h1>
       <section className={styles.TodoDemo}>
@@ -14,6 +15,7 @@ const TodoDemo: React.FC = (): JSX.Element => {
         <TodoItem />
       </section>
     </Provider>
+    </main>
   );
 };
 

@@ -1,22 +1,25 @@
-.Title {
-  color: $activeColor;
-}
-.InfiniteRolling {
-  min-width: 550px;
-  max-height: 400px;
-  padding: 10px 20px;
-  overflow-y: scroll;
-  color: $otherFontColor;
-  background: $white;
-  box-shadow: 0 2px 4px 0 $white, 0 25px 50px 0 rgb(48, 34, 34);
-  &::before {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 50px;
-    overflow: hidden;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px $white, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px $white, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
-    content: '';
+.main {
+  @include flex(center,center,nowrap,column);
+  .Title {
+    color: $activeColor;
+  }
+  .InfiniteRolling {
+    min-width: 550px;
+    max-height: 400px;
+    padding: 10px 20px;
+    overflow-y: scroll;
+    color: $otherFontColor;
+    background: $white;
+    box-shadow: 0 2px 4px 0 $white, 0 25px 50px 0 rgb(48, 34, 34);
+    &::before {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 50px;
+      overflow: hidden;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px $white, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px $white, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
+      content: '';
+    }
   }
 }

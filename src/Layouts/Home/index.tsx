@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { routes } from '../../routes';
 import HeaderSidebar from '../HeaderSidebar';
+import CommonBreadcrumb from '@/components/CommonBreadcrumb'
 import LeftSidebar from '../LeftSidebar';
 import styles from './index.module.scss';
 
@@ -12,6 +13,7 @@ const ComponentsDisplay = () => {
       <div className={styles.main}>
         <LeftSidebar />
           <main className={styles.mainContent}>
+            <CommonBreadcrumb/>
             <Suspense fallback={<div>loading...</div>}>
               <Switch>
                 {routes.map((route) => (
