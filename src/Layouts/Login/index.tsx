@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
 import styles from './index.module.scss';
 import { useHistory } from 'react-router-dom';
 import userData from '../../GameData/users.json'
@@ -12,11 +12,13 @@ const Login = () => {
   const handleLogin = () => {
     userData.map(item => {
       if (item.emailAddress === userName.value && item.password === passWord.value) {
-          history.push('/Home');
-          localStorage.setItem('userInfo', JSON.stringify(item))
-          // 懒得改
-          localStorage.setItem('id', item.userAccountId)
-          localStorage.setItem('token', 'true')
+        message.success('Login Success')
+        history.push('/Home');
+        localStorage.setItem('userInfo', JSON.stringify(item))
+        // 懒得改
+        localStorage.setItem('id', item.userAccountId)
+        localStorage.setItem('token', 'true')
+        return
       }
     })
   }

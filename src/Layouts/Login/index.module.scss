@@ -8,9 +8,12 @@
   .main {
     color: $fontColor;
     background-color: $backgroundColor;
+    border-radius: 10px;
+    border: 1px solid $activeColor;
     padding: 30px 50px;
     width: 30vw;
     height: 30vh;
+    min-height: 300px;
     @include flex(space-between,center,nowrap,column);
     .mainTitle {
       color: $activeColor;

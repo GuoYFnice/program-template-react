@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Menu, Dropdown } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu, Dropdown, message } from 'antd';
+import { UserOutlined,ImportOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import styles from './index.module.scss';
 
@@ -9,17 +9,18 @@ const HeaderSidebar: React.FunctionComponent = (): JSX.Element => {
   let history = useHistory();
   const [userInfo, serUserInfo] = useState<Object>({})
   useEffect(() => {
-    let info = JSON.parse(localStorage.getItem('userInfo'))
-    serUserInfo(info)
+    if (localStorage.getItem('userInfo') !== null) {
+      let info = JSON.parse(localStorage.getItem('userInfo'));
+      serUserInfo(info)
+    }
   }, [])
   function handleMenuClick(e: React.Attributes) {
     if (e.key === '3') {
       localStorage.removeItem('userInfo')
       localStorage.removeItem('token')
       localStorage.removeItem('id')
-      console.log(1,history)
       history.push('/Login');
-      console.log(history)
+      message.success('LoginOut Success')
     }
   }
   const menu = (
@@ -27,8 +28,8 @@ const HeaderSidebar: React.FunctionComponent = (): JSX.Element => {
       <Menu.Item key='1' icon={<UserOutlined />}>
         {userInfo.firstName}
       </Menu.Item>
-      <Menu.Item key='3' icon={<UserOutlined />}>
-        注销
+      <Menu.Item key='3' icon={<ImportOutlined />}>
+        LoginOut
       </Menu.Item>
     </Menu>
   );
