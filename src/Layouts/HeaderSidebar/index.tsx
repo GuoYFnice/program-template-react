@@ -16,16 +16,16 @@ const HeaderSidebar: React.FunctionComponent = (): JSX.Element => {
     if (e.key === '3') {
       localStorage.removeItem('userInfo')
       localStorage.removeItem('token')
+      localStorage.removeItem('id')
+      console.log(1,history)
       history.push('/Login');
+      console.log(history)
     }
   }
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key='1' icon={<UserOutlined />}>
         {userInfo.firstName}
-      </Menu.Item>
-      <Menu.Item key='2' icon={<UserOutlined />}>
-        {userInfo.lastName}
       </Menu.Item>
       <Menu.Item key='3' icon={<UserOutlined />}>
         注销

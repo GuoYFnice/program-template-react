@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { mainRoutes } from '../routes';
 
-const a = 12
 const ComponentsDisplay = () => {
     const [token, setToken]  = useState(false)
     useEffect(()=>{
@@ -18,7 +17,7 @@ const ComponentsDisplay = () => {
                     ))}
                     {/* 重定向路由。 */}
                     {
-                        token ? <Redirect exact to='/Login' from='/' /> : <Redirect exact to='/Home' from='/' />
+                        token ? <Redirect exact to='/Login'/> : <Redirect exact to='/Home'/>
                     }
 
                 </Switch>
