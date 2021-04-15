@@ -2,12 +2,12 @@
     display: flex;
     flex-wrap: wrap;
     .box {
-      border: 1px solid #fff;
+      border: 1px solid $white;
       width: 30%;
       height: 100px;
       display: flex;
       .no {
-        color: red;
+        color: $activeColor;
       }
     }
   }

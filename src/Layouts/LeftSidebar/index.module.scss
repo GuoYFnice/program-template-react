@@ -4,21 +4,23 @@
   :global {
     .ant-menu-inline {
       background-color: $defaultColor !important;
+      color: $fontColor !important;
     }
     .ant-menu-item-only-child {
       margin: 0;
     }
     .ant-menu-item-selected {
       background-color: $activeColor !important;
+    color: $fontColor !important;
       a {
-        color: $defaultColor !important;
+        color: $fontColor !important;
       }
     }
     .ant-menu-item-active:not(.ant-menu-item-selected) {
       margin-left: 10px;
       transform: scale(1.1);
       a {
-        color: $activeColor !important;
+        color: $fontColor !important;
       }
     }
   }
